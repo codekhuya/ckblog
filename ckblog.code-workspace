@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "laradock"
+			"path": "api.blog"
 		},
 		{
-			"path": "api.blog"
+			"path": "laradock"
 		}
 	],
 	"settings": {}
