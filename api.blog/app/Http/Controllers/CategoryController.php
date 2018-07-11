@@ -14,7 +14,34 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $keyword = request()->input('keyword');
+        $sort = request()->input('sort');
+        $order = request()->input('order');
+        $limit = request()->input('limit');
+        try{
+            $categories = Category::
+            //Tim kiem theo tham so truyen vao
+            when($sort, function($query1) use($sort, $order)
+                {
+                    //Khi sort co gia tri thi sap xep theo $sort
+                    $query1->orderBy($sort, $order);
+                },
+                function ($query2)
+                {
+                    //Mac dinh sap xep theo id giam dan
+                    $query2->orderBy('id', 'desc');
+                })
+            //Tim kiem theo keyword
+            ->when($keyword, function($query3) use($keyword)
+                    {
+                        $query3->where('title', 'LIKE', "%$keyword%")
+                        ->orWhere('description', 'LIKE', "$keyword");
+                    }
+                )->simplePaginate($limit);
+            return response()->json($categories);
+        }catch(\Exception $e){
+            return response()->json(['status'=>'error','message'=>'Not Found']);
+        }
     }
 
     /**
@@ -46,7 +73,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        
     }
 
     /**
