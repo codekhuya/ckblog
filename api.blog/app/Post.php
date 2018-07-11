@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $fillable = [
-        'user_id', 'name', 'slug', 'description', 'content', 'published', 'image',
+        'user_id', 'thumbnail', 'title', 'body', 'slug', 'description',
+        'published', 'view_count', 'share_count',
     ];
 
     protected $hidden = ['pivot',];
@@ -25,12 +26,12 @@ class Post extends Model
         return $this->morphMany('App\Comment','commentable');
     }
 
-    //Tra ve tat ca cac tag cua post
-    public function tags(){
-        return $this->morphMany('App\Tag','taggable');
-    }
-    
     public function menus(){
         return $this->morphMany('App\Menu','menuable');
+    }
+    
+    //Tra ve tat ca cac tag cua post
+    public function tags(){
+        return $this->morphToMany('App\Tag','taggable');
     }
 }

@@ -13,11 +13,14 @@ class CreateCategoryPost extends Migration
      */
     public function up()
     {
-        Schema::table('category_post', function (Blueprint $table) {
+        Schema::create('category_post', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedInteger('post_id');
+            
+        });
+        Schema::table('category_post', function (Blueprint $table) {
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('post_id')->references('id')->on('posts');
         });
     }

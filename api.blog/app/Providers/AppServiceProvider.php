@@ -16,8 +16,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'post' => App\Post::class,
-            'video' => App\Video::class,
-        ]);
+            'page' =>App\Page::class,
+        ]); 
     }
 
     /**

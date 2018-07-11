@@ -15,16 +15,18 @@ class CreatePagesTable extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('title')->unique();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->longtext('body')->nullable();
             $table->boolean('published')->default(0);
-            $table->integer('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade');
+            $table->unsignedInteger('user_id')->nullable();   
             $table->timestamps();
             $table->softDeletes();
+        });
+        Schema::table('pages', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDetele('cascade');
         });
     }
 
